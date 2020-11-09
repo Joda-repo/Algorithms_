@@ -7,7 +7,6 @@ import random
 
 rand = random.randint(0, 100)
 i = 0  # счетчик попыток.
-print(rand)
 
 def guess():
     global i
