@@ -14,7 +14,7 @@ profit = 0
 
 for i in range(count_company):
     name = input(f'Введите название {i + 1}-й компании: ')
-    quarters = [float(j) for j in input('Введите через пробел прибыль в каждом квартале: ').split()]
+    quarters = [int(j) for j in input('Введите через пробел прибыль в каждом квартале: ').split()]
 
     year = 0
     for quarter in quarters:
