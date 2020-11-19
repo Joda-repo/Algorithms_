@@ -8,10 +8,12 @@ from collections import deque
 
 
 def sum_hex(x, y):
-    hex_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-                'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15,
-                0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
-                10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
+    hex_sum_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, 'A': 10, 'B': 11,
+                    'C': 12,
+                    'D': 13, 'E': 14, 'F': 15,
+                    0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: 'A', 11: 'B',
+                    12: 'C',
+                    13: 'D', 14: 'E', 15: 'F'}
     result = deque()
     check = 0
 
@@ -24,18 +26,18 @@ def sum_hex(x, y):
     while x:
 
         if y:
-            res = hex_dict[x.pop()] + hex_dict[y.pop()] + check
+            res = hex_sum_dict[x.pop()] + hex_sum_dict[y.pop()] + check
 
         else:
-            res = hex_dict[x.pop()] + check
+            res = hex_sum_dict[x.pop()] + check
 
         check = 0
 
         if res < 16:
-            result.appendleft(hex_dict[res])
+            result.appendleft(hex_sum_dict[res])
 
         else:
-            result.appendleft(hex_dict[res - 16])
+            result.appendleft(hex_sum_dict[res - 16])
             check = 1
 
     if check:
@@ -45,49 +47,49 @@ def sum_hex(x, y):
 
 
 def mult_hex(x, y):
-    HEX_NUM = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-               'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15,
-               0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
-               10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
+    hex_multi_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, 'A': 10, 'B': 11,
+                      'C': 12, 'D': 13, 'E': 14, 'F': 15,
+                      0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: 'A', 11: 'B',
+                      12: 'C', 13: 'D', 14: 'E', 15: 'F'}
     result = deque()
-    spam = deque([deque() for _ in range(len(y))])
+    check = deque([deque() for _ in range(len(y))])
 
     x, y = x.copy(), deque(y)
 
     for i in range(len(y)):
-        m = HEX_NUM[y.pop()]
+        m = hex_multi_dict[y.pop()]
 
         for j in range(len(x) - 1, -1, -1):
-            spam[i].appendleft(m * HEX_NUM[x[j]])
+            check[i].appendleft(m * hex_multi_dict[x[j]])
 
         for _ in range(i):
-            spam[i].append(0)
+            check[i].append(0)
 
     transfer = 0
 
-    for _ in range(len(spam[-1])):
+    for _ in range(len(check[-1])):
         res = transfer
 
-        for i in range(len(spam)):
-            if spam[i]:
-                res += spam[i].pop()
+        for i in range(len(check)):
+            if check[i]:
+                res += check[i].pop()
 
         if res < 16:
-            result.appendleft(HEX_NUM[res])
+            result.appendleft(hex_multi_dict[res])
 
         else:
-            result.appendleft(HEX_NUM[res % 16])
+            result.appendleft(hex_multi_dict[res % 16])
             transfer = res // 16
 
     if transfer:
-        result.appendleft(HEX_NUM[transfer])
+        result.appendleft(hex_multi_dict[transfer])
 
     return list(result)
 
 
 a = list(input('Введите 1-е шестнадцатиричное число: ').upper())
 b = list(input('Введите 2-е шестнадцатиричное число: ').upper())
-# print(a, b)
+
 
 print(*a, '+', *b, '=', *sum_hex(a, b))
 
