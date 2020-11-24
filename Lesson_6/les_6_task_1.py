@@ -11,8 +11,6 @@ task_1 занимает меньше всего места так не испо�
 import random
 import sys
 
-total = 0
-
 
 def task_0(SIZE, MIN_ITEM, MAX_ITEM):  # первый вариант исходный.
     print(f"\n {'-' * 100}")
@@ -104,7 +102,6 @@ type(x)=<class 'dict'>, sys.getsizeof(x)=196, x={'SIZE': 10, 'array': [11, 42, 4
 
 
 def show(x):
-    global total
     total = 0
     print(f'{type(x)=}, {sys.getsizeof(x)=}, {x=}')
     if hasattr(x, '__iter__'):
@@ -112,9 +109,9 @@ def show(x):
             for key, value in x.items():
                 print(f'Переменная : {key}, размер:  {sys.getsizeof(value)}')
                 total += sys.getsizeof(value)
-        elif not isinstance(x, str):
-            for item in x:
-                show(item)
+#        elif not isinstance(x, str):
+#            for item in x:
+#                show(item)
     return f'Размер всех переменных в функции : {total}'
 
 
